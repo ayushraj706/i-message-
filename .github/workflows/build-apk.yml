@@ -25,7 +25,7 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.13.0' # Yahan sabse bada change kiya hai taaki dependency error na aaye
+          flutter-version: '3.24.0' # Update kiya gaya version taaki SDK ka error na aaye
           channel: 'stable'
           cache: true
 
