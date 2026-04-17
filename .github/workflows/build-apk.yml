@@ -21,7 +21,7 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
-          cache: 'gradle' # YAHAN MAGIC HAI: Ye line Android build ko 2x fast kar degi pichla data use karke
+          cache: 'gradle' # YAHAN MAGIC HAI: Ye line Android build ko fast kar degi
 
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
@@ -34,18 +34,18 @@ jobs:
         run: |
           flutter pub get || (sleep 5 && flutter pub get)
 
-      # NAYA STEP: Ye step ek khali .env file banayega taaki build crash na ho
+      # Ye step ek khali .env file banayega taaki build crash na ho
       - name: Create dummy .env file
         run: touch .env
 
-      # Yahan --profile add kiya gaya hai
+      # Yahan RAM crash se bachne ke liye --debug lagaya gaya hai
       - name: Build APK
-        run: flutter build apk --profile --no-tree-shake-icons
+        run: flutter build apk --debug --no-tree-shake-icons
 
-      # Yahan path mein app-profile.apk update kiya gaya hai
+      # Yahan path mein app-debug.apk update kiya gaya hai
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: BlueBubbles-App-APK
-          path: build/app/outputs/flutter-apk/app-profile.apk
+          path: build/app/outputs/flutter-apk/app-debug.apk
           
