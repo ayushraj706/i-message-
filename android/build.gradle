@@ -8,20 +8,13 @@ allprojects {
 }
 
 rootProject.buildDir = '../build'
+
+// YAHAN BADLAAV HAI: Dono subprojects ko ek hi block mein mila diya aur upar shift kar diya
 subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
-}
-subprojects {
-    project.evaluationDependsOn(':app')
-}
 
-tasks.register("clean", Delete) {
-    delete rootProject.buildDir
-}
-
-// NAYA CODE: Ye block lStar error fix karne ke liye hai (Force update SDK)
-subprojects {
-    afterEvaluate { project ->
+    // Ye block ab sahi time par run hoga, bina crash kiye
+    project.afterEvaluate {
         if (project.hasProperty('android')) {
             project.android {
                 if (namespace == null) {
@@ -29,11 +22,15 @@ subprojects {
                 }
                 compileSdkVersion 34
                 buildToolsVersion "34.0.0"
-                defaultConfig {
-                    minSdkVersion 21
-                    targetSdkVersion 34
-                }
             }
         }
     }
+}
+
+subprojects {
+    project.evaluationDependsOn(':app')
+}
+
+tasks.register("clean", Delete) {
+    delete rootProject.buildDir
 }
