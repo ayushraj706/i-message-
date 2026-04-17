@@ -37,12 +37,14 @@ jobs:
       - name: Create dummy .env file
         run: touch .env
 
+      # Yahan --profile add kiya gaya hai
       - name: Build APK
-        run: flutter build apk --release --no-tree-shake-icons
+        run: flutter build apk --profile --no-tree-shake-icons
 
+      # Yahan path mein app-profile.apk update kiya gaya hai
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: BlueBubbles-App-APK
-          path: build/app/outputs/flutter-apk/app-release.apk
+          path: build/app/outputs/flutter-apk/app-profile.apk
           
