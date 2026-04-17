@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - master
-  workflow_dispatch: # Isse aap manual bhi build trigger kar sakte hain
+  workflow_dispatch:
 
 jobs:
   build:
@@ -13,6 +13,8 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+        with:
+          submodules: 'recursive' # BlueBubbles ke liye zaroori ho sakta hai
 
       - name: Set up Java
         uses: actions/setup-java@v4
@@ -23,9 +25,15 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.x' # BlueBubbles modern Flutter version use karta hai
+          flutter-version: '3.x'
           channel: 'stable'
           cache: true
+
+      # Ye step Git dependencies ka error fix karega
+      - name: Configure Git for Private/Public Dependencies
+        run: |
+          git config --global url."https://github.com/".insteadOf "git@github.com:"
+          git config --global url."https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf "https://github.com/"
 
       - name: Get Dependencies
         run: flutter pub get
