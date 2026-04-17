@@ -21,6 +21,7 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
+          cache: 'gradle' # YAHAN MAGIC HAI: Ye line Android build ko 2x fast kar degi pichla data use karke
 
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
