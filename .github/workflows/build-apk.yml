@@ -25,13 +25,17 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.24.0' # Update kiya gaya version taaki SDK ka error na aaye
+          flutter-version: '3.24.0'
           channel: 'stable'
           cache: true
 
       - name: Get Dependencies
         run: |
-          flutter pub get || (sleep 5 && flutter pub get) # Retry logic agar network issue ho
+          flutter pub get || (sleep 5 && flutter pub get)
+
+      # NAYA STEP: Ye step ek khali .env file banayega taaki build crash na ho
+      - name: Create dummy .env file
+        run: touch .env
 
       - name: Build APK
         run: flutter build apk --release --no-tree-shake-icons
